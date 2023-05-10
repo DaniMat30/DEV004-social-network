@@ -1,0 +1,31 @@
+.home-container {
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: .8;
+}
+
+.login-button {
+  position: relative;
+  z-index: 1;
+  /* Agrega el resto de los estilos para el botón */
+}
+
+.background-image {
+  position: fixed; /* o absolute */
+  top: 100;
+  left: -10;
+  width: -10%;
+  height: -10%;
+  overflow: hidden;
+  opacity: .5;
+  z-index: -1;
+  /* Agrega el resto de los estilos para la imagen de fondo */
+}
+En este ejemplo, se ha establecido la propiedad z-index de la imagen de fondo en -1, lo que la coloca detrás del contenido de la página. También se ha establecido la propiedad position en fixed, lo que asegura que la imagen de fondo permanezca en
+
+
+

@@ -1,6 +1,7 @@
 import { onNavigate } from '../router';
+import { crearUsuario } from '../lib/firebase';
 
-export const register = () => {
+export function register() {
   // crea contenedor principal
   const section = document.createElement('section');
   const inputEmail = document.createElement('input');
@@ -14,7 +15,14 @@ export const register = () => {
   buttonHome.textContent = 'Volver al home';
   buttonRegister.addEventListener('click', () => {
     // llama funcion navigate y pasa string con la ruta
-    onNavigate('/wall');
+    // onNavigate('/wall');
+    if (inputEmail.value === '' || inputPassword.value === '') {
+      alert('verifica tus datos');
+    } else {
+      crearUsuario(inputEmail.value, inputPassword.value).then(() => {
+        onNavigate('/wall');
+      });
+    }
   });
   buttonHome.addEventListener('click', () => {
     // llama funcion navigate y pasa string con la ruta
@@ -24,4 +32,4 @@ export const register = () => {
   section.append(inputEmail, inputPassword, buttonRegister, buttonHome);
   // retorna contenedor madre
   return section;
-};
+}
