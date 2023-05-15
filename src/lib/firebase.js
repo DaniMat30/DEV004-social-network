@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // TODO FIREBASE
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
@@ -5,6 +6,7 @@ import {
   getAuth, signInWithPopup, GoogleAuthProvider,
   createUserWithEmailAndPassword, signInWithEmailAndPassword,
 } from 'firebase/auth';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,9 +24,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
-
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
+
 export const entrarConGoogle = () => {
   const auth = getAuth();
   return signInWithPopup(auth, provider)
@@ -63,23 +66,25 @@ export const crearUsuario = (email, password) => {
     });
 };
 
-export const entrarConEmail = (email, password) => {
+export const entrarConEmail = async (email, password) => {
   const auth = getAuth();
-  return signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-      return user
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      return errorCode
-    });
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    // Signed in
+    const user = userCredential.user;
+    return user;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    return errorCode;
+  }
 };
 
 // wall
-export const guardarPost = (text) =>{
-  // addDoc
-}
+export const guardarPost = async (text) => {
+  const docRef = await addDoc(collection(db, 'posts'), {
+    text,
+    timestamp: new Date(),
+  });
+  console.log('Document written with ID: ', docRef.id);
+};
