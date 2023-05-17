@@ -59,7 +59,7 @@ export function home() {
         } else {
           onNavigate("/wall");
         }
-      }); 
+      });
     }
   });
 

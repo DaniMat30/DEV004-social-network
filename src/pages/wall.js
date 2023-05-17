@@ -1,56 +1,77 @@
-import { guardarPost } from "../lib/firebase.js";
+import { guardarPost } from '../lib/firebase.js';
 
 export function wall() {
   // crea contenedor principal
-  const mainContainer = document.createElement("div");
+  const mainContainer = document.createElement('div');
 
   // crea el encabezado de la página
-  const header = document.createElement("header");
-  const title = document.createElement("h1");
-  title.textContent = "¡Bienvenido!";
+  const header = document.createElement('header');
+  const title = document.createElement('h1');
+  title.textContent = '¡Bienvenido!';
   header.appendChild(title);
 
   // crea las secciones de los niveles de dificultad
-  const basicSection = document.createElement("section");
-  const basicTitle = document.createElement("h2");
-  basicTitle.textContent = "Nivel básico";
-  const basicDriveLink = document.createElement("a");
-  basicDriveLink.href = "https://drive.google.com/...";
-  basicDriveLink.textContent = "Enlace a Google Drive";
+  const basicSection = document.createElement('section');
+  const basicTitle = document.createElement('h2');
+  basicTitle.textContent = 'Nivel básico';
+  const basicDriveLink = document.createElement('a');
+  basicDriveLink.href = 'https://drive.google.com/...';
+  basicDriveLink.textContent = 'Enlace a Google Drive';
   basicSection.appendChild(basicTitle);
   basicSection.appendChild(basicDriveLink);
 
-  const intermediateSection = document.createElement("section");
-  const intermediateTitle = document.createElement("h2");
-  intermediateTitle.textContent = "Nivel intermedio";
-  const intermediateDriveLink = document.createElement("a");
-  intermediateDriveLink.href = "https://drive.google.com/...";
-  intermediateDriveLink.textContent = "Enlace a Google Drive";
+  const intermediateSection = document.createElement('section');
+  const intermediateTitle = document.createElement('h2');
+  intermediateTitle.textContent = 'Nivel intermedio';
+  const intermediateDriveLink = document.createElement('a');
+  intermediateDriveLink.href = 'https://drive.google.com/...';
+  intermediateDriveLink.textContent = 'Enlace a Google Drive';
   intermediateSection.appendChild(intermediateTitle);
   intermediateSection.appendChild(intermediateDriveLink);
 
-  const advancedSection = document.createElement("section");
-  const advancedTitle = document.createElement("h2");
-  advancedTitle.textContent = "Nivel avanzado";
-  const advancedDriveLink = document.createElement("a");
-  advancedDriveLink.href = "https://drive.google.com/...";
-  advancedDriveLink.textContent = "Enlace a Google Drive";
+  const advancedSection = document.createElement('section');
+  const advancedTitle = document.createElement('h2');
+  advancedTitle.textContent = 'Nivel avanzado';
+  const advancedDriveLink = document.createElement('a');
+  advancedDriveLink.href = 'https://drive.google.com/...';
+  advancedDriveLink.textContent = 'Enlace a Google Drive';
   advancedSection.appendChild(advancedTitle);
   advancedSection.appendChild(advancedDriveLink);
 
   // crea la sección de comentarios
-  const commentsSection = document.createElement("section");
-  const commentsTitle = document.createElement("h2");
-  commentsTitle.textContent = "Comentarios y recomendaciones";
-  const commentsForm = document.createElement("form");
+  const commentsSection = document.createElement('section');
+  const commentsTitle = document.createElement('h2');
+  commentsTitle.textContent = 'Comentarios y recomendaciones';
+  const commentsForm = document.createElement('article');
   commentsForm.innerHTML = `
     <label for="name">Nombre:</label>
     <input type="text" id="name" name="name">
     <label for="comment">Comentario:</label>
-    <textarea id="comment" name="comment"></textarea>
-    <button type="submit" id= "buttonSend">Enviar</button>
+   
+   
   `;
- 
+  const textarea = document.createElement('textarea');
+  textarea.id = 'comentario';
+  commentsForm.appendChild(textarea);
+
+  const formButton = document.createElement('button');
+  formButton.id = 'buttonSend';
+  formButton.textContent = 'Enviar';
+  commentsForm.append(formButton);
+
+  formButton.addEventListener('click', () => {
+    // alert(textarea.value)
+    // const comment = document.getElementById('comment').value;
+    // console.log(comment);
+    // Valides que el textarea.value === ''
+    if (textarea.value !== '') {
+      guardarPost(textarea.value);
+      textarea.value = '';
+    } else {
+      alert('Captura un msj');
+    }
+  });
+
   commentsSection.appendChild(commentsTitle);
   commentsSection.appendChild(commentsForm);
   // añadir guardarPost a boton de enviar
@@ -64,13 +85,4 @@ export function wall() {
   mainContainer.appendChild(commentsSection);
 
   return mainContainer;
-}
-
-const formButton = document.getElementById('buttonSend');
-if (formButton) {
-  formButton.addEventListener('click', () => {
-    const comment = document.getElementById('comment').textContent;
-    console.log(comment);
-    //guardarPost(comment);
-  });
 }
