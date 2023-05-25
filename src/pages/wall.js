@@ -1,8 +1,12 @@
-import { guardarPost } from '../lib/firebase.js';
+/* eslint-disable no-alert */
+import { onSnapshot } from 'firebase/firestore';
+import { guardarPost, verPosts } from '../lib/firebase.js';
 
 export function wall() {
   // crea contenedor principal
   const mainContainer = document.createElement('div');
+  // Establece el color de fondo
+  document.body.style.backgroundColor = '#FDCEDF'; // el color que desees
 
   // crea el encabezado de la página
   const header = document.createElement('header');
@@ -15,8 +19,9 @@ export function wall() {
   const basicTitle = document.createElement('h2');
   basicTitle.textContent = 'Nivel básico';
   const basicDriveLink = document.createElement('a');
-  basicDriveLink.href = 'https://drive.google.com/...';
+  basicDriveLink.href = 'https://drive.google.com/drive/folders/1O7qRwghYitinx1pAiJ-87MdfHJQXNQZL?usp=sharing';
   basicDriveLink.textContent = 'Enlace a Google Drive';
+  basicDriveLink.target = '_blank'; // Abre el enlace en una nueva pestaña
   basicSection.appendChild(basicTitle);
   basicSection.appendChild(basicDriveLink);
 
@@ -24,7 +29,7 @@ export function wall() {
   const intermediateTitle = document.createElement('h2');
   intermediateTitle.textContent = 'Nivel intermedio';
   const intermediateDriveLink = document.createElement('a');
-  intermediateDriveLink.href = 'https://drive.google.com/...';
+  intermediateDriveLink.href = 'https://drive.google.com/drive/folders/1O7qRwghYitinx1pAiJ-87MdfHJQXNQZL?usp=sharing';
   intermediateDriveLink.textContent = 'Enlace a Google Drive';
   intermediateSection.appendChild(intermediateTitle);
   intermediateSection.appendChild(intermediateDriveLink);
@@ -33,7 +38,7 @@ export function wall() {
   const advancedTitle = document.createElement('h2');
   advancedTitle.textContent = 'Nivel avanzado';
   const advancedDriveLink = document.createElement('a');
-  advancedDriveLink.href = 'https://drive.google.com/...';
+  advancedDriveLink.href = 'https://drive.google.com/drive/folders/1O7qRwghYitinx1pAiJ-87MdfHJQXNQZL?usp=sharing';
   advancedDriveLink.textContent = 'Enlace a Google Drive';
   advancedSection.appendChild(advancedTitle);
   advancedSection.appendChild(advancedDriveLink);
@@ -74,15 +79,34 @@ export function wall() {
 
   commentsSection.appendChild(commentsTitle);
   commentsSection.appendChild(commentsForm);
-  // añadir guardarPost a boton de enviar
-
-  // el boton enviar debe capturar el valor del text area id="comment"
-  // agrega todas las secciones al contenedor principal
   mainContainer.appendChild(header);
   mainContainer.appendChild(basicSection);
   mainContainer.appendChild(intermediateSection);
   mainContainer.appendChild(advancedSection);
   mainContainer.appendChild(commentsSection);
+  const listPost = document.createElement('article');
+  mainContainer.appendChild(listPost);
+  //   verPosts(()=>{});
+  // console.log(verPosts);
+
+  onSnapshot(verPosts(), (snapshot) => {
+    snapshot.forEach((post) => {
+      // console.log(post, '****');
+      const containerPost = document.createElement('section');
+      const p = document.createElement('p');
+      const btnEdit = document.createElement('button');
+      const btnDelete = document.createElement('button');
+      btnEdit.textContent = 'Editar';
+      btnDelete.textContent = 'Eliminar';
+      btnDelete.value = post.id;
+      p.textContent = post.data().text;
+      containerPost.append(p, btnDelete, btnEdit);
+      listPost.appendChild(containerPost);
+      // btnDelete añadir manejador de eventos (addeventlistener)
+      // console log del value de cada boton
+      // crear la funcion en firebase.js DELETEPOST y llamas al metodo DELETEDOC de firestore
+    });
+  });
 
   return mainContainer;
 }

@@ -6,7 +6,12 @@ import {
   getAuth, signInWithPopup, GoogleAuthProvider,
   createUserWithEmailAndPassword, signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore';
+import {
+  getFirestore, collection, addDoc, Timestamp,
+  query, orderBy,
+} from 'firebase/firestore';
+
+// import { firestore } from "../lib/firebase.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -80,5 +85,11 @@ export const guardarPost = async (text) => {
     text,
     timestamp: Timestamp.now(), // fecha de creacion
   });
-  console.log('Document written with ID: ', docRef.id);
+  // console.log('Document written with ID: ', docRef.id);
 };
+
+export function verPosts() {
+  const postsRef = collection(db, 'posts'); // post
+  const queryPost = query(postsRef, orderBy('timestamp', 'desc'));
+  return queryPost;
+}

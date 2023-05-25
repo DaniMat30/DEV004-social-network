@@ -25,6 +25,8 @@
   z-index: -1;
   /* Agrega el resto de los estilos para la imagen de fondo */
 }
+
+
 En este ejemplo, se ha establecido la propiedad z-index de la imagen de fondo en -1, lo que la coloca detrás del contenido de la página. También se ha establecido la propiedad position en fixed, lo que asegura que la imagen de fondo permanezca en
 
 
