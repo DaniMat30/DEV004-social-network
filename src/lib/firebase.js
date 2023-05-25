@@ -9,8 +9,8 @@ import {
 import {
   getFirestore, collection, addDoc, Timestamp,
   query, orderBy,
+  doc, deleteDoc,
 } from 'firebase/firestore';
-
 // import { firestore } from "../lib/firebase.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -92,4 +92,8 @@ export function verPosts() {
   const postsRef = collection(db, 'posts'); // post
   const queryPost = query(postsRef, orderBy('timestamp', 'desc'));
   return queryPost;
+}
+
+export function deletePost() {
+  return deleteDoc(doc(db, 'posts', 'desc'));
 }

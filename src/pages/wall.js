@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import { onSnapshot } from 'firebase/firestore';
-import { guardarPost, verPosts } from '../lib/firebase.js';
+import { guardarPost, verPosts, deletePost } from '../lib/firebase.js';
 
 export function wall() {
   // crea contenedor principal
@@ -103,8 +103,16 @@ export function wall() {
       containerPost.append(p, btnDelete, btnEdit);
       listPost.appendChild(containerPost);
       // btnDelete añadir manejador de eventos (addeventlistener)
-      // console log del value de cada boton
-      // crear la funcion en firebase.js DELETEPOST y llamas al metodo DELETEDOC de firestore
+      btnDelete.addEventListener('click', () => {
+        // console log del value de cada boton
+        console.log(btnDelete.value);
+        // crear la funcion en firebase.js DELETEPOST y llamas al metodo DELETEDOC de firestore
+        deletePost(btnDelete.value).then(() => {
+          containerPost.remove(); // Eliminar el post del DOM
+        }).catch((error) => {
+          console.log('Error al eliminar el post:', error);
+        });
+      });
     });
   });
 
