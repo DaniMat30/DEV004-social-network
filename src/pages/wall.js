@@ -109,6 +109,7 @@ export function wall() {
         // crear la funcion en firebase.js DELETEPOST y llamas al metodo DELETEDOC de firestore
         deletePost(btnDelete.value).then(() => {
           containerPost.remove(); // Eliminar el post del DOM
+          postsEliminados.push(btnDelete.value); // Agregar el ID del post eliminado al array
         }).catch((error) => {
           console.log('Error al eliminar el post:', error);
         });

@@ -94,6 +94,6 @@ export function verPosts() {
   return queryPost;
 }
 
-export function deletePost() {
-  return deleteDoc(doc(db, 'posts', 'desc'));
+export function deletePost(id) {
+  return deleteDoc(doc(db, 'posts', id));
 }
