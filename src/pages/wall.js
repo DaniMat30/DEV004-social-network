@@ -1,6 +1,8 @@
 /* eslint-disable no-alert */
 import { onSnapshot } from 'firebase/firestore';
-import { guardarPost, verPosts, deletePost } from '../lib/firebase.js';
+import {
+  guardarPost, verPosts, deletePost, editPost,
+} from '../lib/firebase.js';
 
 export function wall() {
   // crea contenedor principal
@@ -97,6 +99,15 @@ export function wall() {
       const btnEdit = document.createElement('button');
       const btnDelete = document.createElement('button');
       btnEdit.textContent = 'Editar';
+      btnEdit.addEventListener('click', () => {
+        const newText = prompt('Ingresa el nuevo texto del post:');
+        if (newText) {
+          editPost(btnDelete.value, newText)
+            .then(() => {
+              p.textContent = newText; // Actualizar el contenido del post en el DOM
+            });
+        }
+      });
       btnDelete.textContent = 'Eliminar';
       btnDelete.value = post.id;
       p.textContent = post.data().text;

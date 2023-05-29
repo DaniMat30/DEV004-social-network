@@ -29,8 +29,7 @@ export function home() {
 
   // Crea imagen de fondo
   const backgroundImage = document.createElement("img");
-  backgroundImage.src =
-    "https://markhampubliclibrary.ca/wp-content/uploads/sites/74/2020/06/History-of-Audiobooks.jpg";
+  backgroundImage.src = "https://markhampubliclibrary.ca/wp-content/uploads/sites/74/2020/06/History-of-Audiobooks.jpg";
   backgroundImage.classList.add("background-image__img");
 
   // Agrega imagen de fondo al contenedor
@@ -51,7 +50,6 @@ export function home() {
       alert("verifica tus datos");
     } else {
       entrarConEmail(inputEmail.value, inputPassword.value).then((resp) => {
-        console.log(resp, "******");
         if (resp.includes("auth/wrong")) {
           alert("error en contraseña, verifica");
         } else if (resp.includes("auth/user-not-found")) {
