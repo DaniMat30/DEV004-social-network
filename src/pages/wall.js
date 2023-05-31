@@ -5,9 +5,8 @@ import {
   verPosts,
   deletePost,
   editPost,
-  auth,
 } from '../lib/firebase.js';
-console.log(auth.currentUser?.displayName);
+
 export function wall() {
   const centerContentClass = 'center-content';
   // crea contenedor principal
@@ -96,7 +95,8 @@ export function wall() {
   //   verPosts(()=>{});
   // console.log(verPosts);
 
-  onSnapshot(verPosts(), (snapshot) => {listPost.innerHTML="";
+  onSnapshot(verPosts(), (snapshot) => {
+    listPost.innerHTML = '';
     snapshot.forEach((post) => {
       // console.log(post, '****');
       const containerPost = document.createElement('section');
