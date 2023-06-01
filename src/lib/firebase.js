@@ -37,7 +37,6 @@ const provider = new GoogleAuthProvider();
 export const auth = getAuth(app);
 
 export const entrarConGoogle = async () => {
-  const auth = getAuth();
   try {
     const result = await signInWithPopup(auth, provider);
     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -57,7 +56,6 @@ export const entrarConGoogle = async () => {
 };
 
 export const crearUsuario = async (email, password) => {
-  const auth = getAuth();
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     // Signed in
@@ -69,7 +67,6 @@ export const crearUsuario = async (email, password) => {
 };
 
 export const entrarConEmail = async (email, password) => {
-  const auth = getAuth();
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     // Signed in
@@ -83,9 +80,10 @@ export const entrarConEmail = async (email, password) => {
 };
 
 // wall
-export const guardarPost = async (text) => {
+export const guardarPost = async (text, authorName) => {
   const docRef = await addDoc(collection(db, 'posts'), {
     text,
+    authorName,
     timestamp: Timestamp.now(), // fecha de creacion
   });
   // console.log('Document written with ID: ', docRef.id);

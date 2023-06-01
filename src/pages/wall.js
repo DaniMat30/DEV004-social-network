@@ -71,18 +71,18 @@ export function wall() {
   commentsForm.append(formButton);
 
   formButton.addEventListener('click', () => {
-    // alert(textarea.value)
-    // const comment = document.getElementById('comment').value;
-    // console.log(comment);
-    // Valides que el textarea.value === ''
     if (textarea.value !== '') {
-      guardarPost(textarea.value);
-      textarea.value = '';
+      const authorName = prompt('Enter your name:'); // Solicitar el nombre del autor
+      if (authorName) {
+        guardarPost(textarea.value, authorName); // Pasar el nombre del autor al guardar el post
+        textarea.value = '';
+      } else {
+        alert('Please enter your name.');
+      }
     } else {
-      alert('Captura un msj');
+      alert('Please enter a comment.');
     }
   });
-
   commentsSection.appendChild(commentsTitle);
   commentsSection.appendChild(commentsForm);
   mainContainer.appendChild(header);
